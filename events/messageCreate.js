@@ -5,6 +5,11 @@ module.exports = (client, message) => {
   // Ignore messages not starting with the prefix (in config.json)
   if (message.content.indexOf(client.config.prefix) !== 0) return;
 
+  // Make sure messages don't contain bot token
+  if (message.content.includes("client.token")) {
+    return message.channel.send(`Nice Try, won't be that easy!`);
+  }
+
   // Our standard argument/command name definition.
   const args = message.content
     .slice(client.config.prefix.length)
