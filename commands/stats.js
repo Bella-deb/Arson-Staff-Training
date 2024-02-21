@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
   const embed = new Discord.EmbedBuilder()
   .setTitle(`Bot Stats`)
   .setColor('Random')
-  .setDescription(`**Total Users:** ${totalUsers}\n**Total Servers:** ${totalServers}`);
+  .setDescription(`**Total Users:** ${totalUsers}\n**Total Servers:** ${totalServers}\n**Total Commands:** 3`);
 
   message.channel.send({ embeds: [embed] });
 };
