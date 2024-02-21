@@ -13,6 +13,7 @@ exports.run = async (client, message, args) => {
 
     const pingEmbed = new Discord.EmbedBuilder()
       .setTitle("Ping Command:")
+      .setFooter(`Created by: ${client.users.cache.get("860974614905094144").tag}`)
       .setDescription(
         `## Bot Latency: ${botLatency}ms\n\n## API Latency: ${apiLatency}ms`
       );

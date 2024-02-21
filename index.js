@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("node:path");
 const config = require("./config.json");
 
+// Declare client
 const client = new Client({
   messageCacheLifetime: 60,
   fetchAllMembers: true,
@@ -32,10 +33,9 @@ const client = new Client({
 // Make config available everywhere
 client.config = config;
 
-client.commands = new Collection();
-
+// Get Events
 const events = fs
-  .readdirSync('./events')
+  .readdirSync("./events")
   .filter((file) => file.endsWith(".js"));
 for (const file of events) {
   const eventName = file.split(".")[0];
@@ -43,9 +43,16 @@ for (const file of events) {
   client.on(eventName, event.bind(null, client));
 }
 
+client.commands = new Collection();
+
 const commands = fs
-  .readdirSync('./commands')
+  .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
+
+// Get Total Commands, make it avaiable through client, and log it
+client.totalCommands = commands.length;
+console.log(`Total Commands: ${client.totalCommands}`);
+
 for (const file of commands) {
   const commandName = file.split(".")[0];
   const command = require(`./commands/${file}`);
