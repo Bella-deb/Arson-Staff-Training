@@ -11,10 +11,6 @@ const client = new Client({
   restTimeOffset: 0,
   restWsBridgetimeout: 100,
   shards: "auto",
-  allowedMentions: {
-    disableMentions: true,
-    repliedUser: true,
-  },
   partials: [
     "MESSAGE",
     "CHANNEL",
