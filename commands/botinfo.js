@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const package = require("../package.json");
 
 exports.run = (client, message, args) => {
   // Get the total number of users in all guilds the bot is in
@@ -19,6 +20,7 @@ exports.run = (client, message, args) => {
     .setColor("Random")
     .setDescription(
       `> **General Information**
+💽 **Bot Version:** ${package.version}
 🗓️ **Created:** ${creationTimestamp}
 📒 **Bot Id:** \`${client.user.id}\`
 
@@ -28,7 +30,7 @@ exports.run = (client, message, args) => {
 
 > **Misc**
 🏷️ **Total Commands:** ${client.totalCommands}`
-);
+    );
 
   message.channel.send({ embeds: [embed] });
 };

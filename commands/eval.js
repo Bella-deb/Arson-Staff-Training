@@ -26,10 +26,10 @@ exports.run = async (client, message, args, level) => {
   try {
     const evaled = eval(code);
     const cleaned = await clean(client, evaled);
-    if (cleaned.length >= 4000) {
-      return message.channel.send("Error: Message is over 4000 characters.");
+    if (cleaned.length >= 2000) {
+      return message.channel.send("Error: Message is over 2000 characters.");
     }
-    message.channel.send("Output:\n" + codeBlock("js", cleaned));
+    message.channel.send(`**Output:**\n${codeBlock("js", cleaned)}`);
   } catch (err) {
     const errorMessage = `Error:\n\`\`\`js\n${err}\n\`\`\``;
     message.channel.send(errorMessage);
@@ -37,6 +37,8 @@ exports.run = async (client, message, args, level) => {
   }
   console.log(`${message.author.tag} has used the eval command!`);
 };
+
+exports.name = "eval";
 
 exports.conf = {
   enabled: true,
