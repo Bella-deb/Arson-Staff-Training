@@ -1,0 +1,12 @@
+// REMOVE THESE COMMENTS
+// Change this file to "config.json"
+// Client ID = Application ID found in Discord Developer Portal
+// "ownerID" is used for owner only commands to give permissions to them. (Use User IDs)
+
+{
+    "token":"<token>>",
+    "clientId": "<clientID>",
+    "prefix": "..",
+    "ownerID": [<ownerIDs>],
+    "creatorID":"<bot creator>"
+}
