@@ -2,26 +2,26 @@ const { bold } = require("colorette");
 const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
-  const msg = await message.channel.send("Pinging...");
+  // Make embed show "pinging..."
+  const pinging = new Discord.EmbedBuilder()
+    .setTitle("Ping Command:")
+    .setDescription(`Awaiting Pinging...`);
+
+  const msg = await message.channel.send({ embeds: [pinging] });
 
   const pingEmbed = new Discord.EmbedBuilder().setTitle(
     "Ping Command:"
   ).setDescription;
   if (client.readyAt) {
-    const botLatency = msg.createdTimestamp - message.createdTimestamp;
-    const apiLatency = client.ws.ping;
-
     const pingEmbed = new Discord.EmbedBuilder()
       .setTitle("Ping Command:")
-      .setFooter(
-        `Created by: ${client.users.cache.get("860974614905094144").tag}`
-      )
       .setDescription(
-        `## Bot Latency: ${botLatency}ms\n\n## API Latency: ${apiLatency}ms`
+        `> 🏓 Bot Latency: **${
+          Date.now() - message.createdTimestamp
+        }ms**\n\n> 🏓 API Latency: **${Math.round(client.ws.ping)}ms**`
       );
 
-    msg.delete();
-    message.channel.send({ embeds: [pingEmbed] }).catch(console.error);
+    msg.edit({ embeds: [pingEmbed] }).catch(console.error);
   } else {
     console.log("Bot is not ready yet. Waiting for the ready event...");
   }
@@ -34,4 +34,4 @@ exports.run = async (client, message, args) => {
 };
 
 exports.name = "ping";
-exports.aliases = ["p"]; // Add the alias "pong" to the command
+exports.aliases = ["p"]; // Add the alias "p" to the command

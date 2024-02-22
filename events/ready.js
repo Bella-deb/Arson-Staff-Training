@@ -17,6 +17,7 @@ module.exports = (client) => {
   );
 
   // Makes activity: "Watching staff members!"
+  // Type 3 = Watching
   client.user.setPresence({
     activities: [{ type: 3, name: "staff members!" }],
     status: "online",
