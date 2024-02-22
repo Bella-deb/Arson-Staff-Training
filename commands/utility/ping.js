@@ -1,5 +1,5 @@
-const { bold } = require("colorette");
-const Discord = require("discord.js");
+const { bold } = require("colorette"); // Importing the 'bold' function from the 'colorette' package
+const Discord = require("discord.js"); // Importing the 'discord.js' library
 
 exports.run = async (client, message, args) => {
   // Make embed show "pinging..."

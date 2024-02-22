@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const package = require("../package.json");
+const package = require("../../package.json");
 
 exports.run = (client, message, args) => {
   // Get the total number of users in all guilds the bot is in

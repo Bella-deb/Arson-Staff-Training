@@ -1,8 +1,8 @@
 const { bold } = require("colorette");
 const Discord = require("discord.js");
 
-const package = require("../package.json");
-const config = require("../config.json");
+const package = require("../../package.json");
+const config = require("../../config.json");
 const allowedUsers = config.ownerID || [];
 
 exports.run = (client, message, args) => {

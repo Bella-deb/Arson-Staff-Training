@@ -1,6 +1,6 @@
 const { codeBlock } = require("@discordjs/builders");
 
-const config = require("../config.json");
+const config = require("../../config.json");
 const allowedUsers = config.ownerID;
 
 async function clean(client, text) {
