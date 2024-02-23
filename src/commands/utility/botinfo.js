@@ -1,7 +1,12 @@
 const Discord = require("discord.js");
 const package = require("../../../package.json");
 
-exports.run = (client, message, args) => {
+module.exports = {
+  name: "botinfo",
+  aliases: ["bi"],
+}
+
+module.exports.run = (client, message, args) => {
   // Get the total number of users in all guilds the bot is in
   const totalUsers = client.users.cache.size;
 
@@ -34,6 +39,3 @@ exports.run = (client, message, args) => {
 
   message.channel.send({ embeds: [embed] });
 };
-
-exports.name = "botinfo";
-exports.description = "Displays bot statistics.";

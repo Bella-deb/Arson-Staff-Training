@@ -17,7 +17,12 @@ async function clean(client, text) {
   return text;
 }
 
-exports.run = async (client, message, args, level) => {
+module.exports = {
+  name: "eval",
+  aliases: ["e", "ev"],
+}
+
+module.exports.run = async (client, message, args, level) => {
   if (!allowedUsers.includes(message.author.id)) {
     return message.channel.send("You are not authorized to use this command.");
   }

@@ -3,9 +3,14 @@ const Discord = require("discord.js");
 
 const package = require("../../../package.json");
 const config = require("../../config.json");
-const allowedUsers = config.ownerID || [];
+const allowedUsers = config.ownerID;
 
-exports.run = (client, message, args) => {
+module.exports = {
+  name: "version",
+  aliases: ["v", "ver", "dependencies"],
+}
+
+module.exports.run = (client, message, args) => {
   try {
     if (!allowedUsers.includes(message.author.id)) {
       throw new Error("You are not authorized to use this command.");
@@ -35,5 +40,3 @@ exports.run = (client, message, args) => {
     message.channel.send(`An error occurred: ${error.message}`);
   }
 };
-
-exports.name = "version";

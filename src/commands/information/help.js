@@ -2,6 +2,11 @@ const { bold } = require("colorette"); // Importing the 'bold' function from the
 const Discord = require("discord.js"); // Importing the 'discord.js' library
 const config = require("../../config.json");
 
+module.exports = {
+  name: "help",
+  aliases: ["h", "commands"],
+}
+
 exports.run = async (client, message, args) => {
   console.log(
     `${bold("Help Command Used:")}\nUser: ${message.author.tag}\nUser ID: ${
@@ -49,6 +54,3 @@ exports.run = async (client, message, args) => {
     message.channel.send({ embeds: [helpEmbedForOwners] });
   }
 };
-
-exports.name = "help";
-exports.aliases = ["h"]; // Add the alias "h" to the command

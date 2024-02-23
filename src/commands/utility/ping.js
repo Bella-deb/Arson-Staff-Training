@@ -1,7 +1,12 @@
 const { bold } = require("colorette"); // Importing the 'bold' function from the 'colorette' package
 const Discord = require("discord.js"); // Importing the 'discord.js' library
 
-exports.run = async (client, message, args) => {
+module.exports = {
+  name: "ping",
+  aliases: ["p"],
+}
+
+module.exports.run = async (client, message, args) => {
   // Make embed show "pinging..."
   const pinging = new Discord.EmbedBuilder()
     .setTitle("Ping Command:")
@@ -28,6 +33,3 @@ exports.run = async (client, message, args) => {
     console.log("Bot is not ready yet. Waiting for the ready event...");
   }
 };
-
-exports.name = "ping";
-exports.aliases = ["p"]; // Add the alias "p" to the command

@@ -1,6 +1,11 @@
 const Discord = require("discord.js");
 
-exports.run = async (client, message, args) => {
+module.exports = {
+  name: "finish",
+  aliases: ["f"],
+}
+
+module.exports.run = async (client, message, args) => {
   if (!message.channel.name.includes(message.author.id)) {
     return message.channel.send("You are not authorized to use this command.");
   }
@@ -33,5 +38,3 @@ exports.run = async (client, message, args) => {
     );
   }
 };
-
-exports.name = "finish";

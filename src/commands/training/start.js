@@ -1,6 +1,11 @@
 const Discord = require("discord.js");
 
-exports.run = async (client, message, args) => {
+module.exports = {
+  name: "start",
+  aliases: ["s"],
+}
+
+module.exports.run = async (client, message, args) => {
   try {
     const member = message.member.roles.cache.has("1209983942216908932");
     const trainedUserID = args[0];
@@ -131,5 +136,3 @@ Once you are finished, please run the ..finish command.\`\`\``,
     message.channel.send(`An error occurred!`);
   }
 };
-
-exports.name = "start";
