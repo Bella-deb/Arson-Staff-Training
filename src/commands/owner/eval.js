@@ -1,4 +1,5 @@
 const { codeBlock } = require("@discordjs/builders");
+const { bold } = require("colorette"); // Importing the 'bold' function from the 'colorette' package
 
 const config = require("../../config.json");
 const allowedUsers = config.ownerID;
@@ -32,7 +33,7 @@ module.exports.run = async (client, message, args, level) => {
     const evaled = eval(code);
     const cleaned = await clean(client, evaled);
     if (cleaned.length > 2000) {
-      return message.channel.send("Error: Message is over 2000 characters.");
+      return message.channel.send("Message is over 2000 characters. Evaluation sent to console!").then(console.log(`${bold("Evaluation:")}\n${cleaned}`));
     }
     message.channel.send(`**Output:**\n${codeBlock("js", cleaned)}`);
   } catch (err) {
