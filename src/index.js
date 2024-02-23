@@ -12,7 +12,6 @@ const client = new Client({
   messageCacheMaxSize: 10,
   restTimeOffset: 0,
   restWsBridgetimeout: 100,
-  shards: "auto",
   partials: [
     Partials.Message,
     Partials.Channel,

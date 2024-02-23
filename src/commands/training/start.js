@@ -3,31 +3,12 @@ const Discord = require("discord.js");
 module.exports = {
   name: "start",
   aliases: ["s"],
-}
+};
 
 module.exports.run = async (client, message, args) => {
   try {
     const member = message.member.roles.cache.has("1209983942216908932");
     const trainedUserID = args[0];
-
-    if (trainedUserID === undefined) {
-      return message.channel.send(`Please provide an argument!`)
-    }
-    
-    // Make sure user ID is 17 characters long.
-    if (trainedUserID.length < 17) {
-      return message.channel.send(
-        `A user ID must be at LEAST 17 characters long! Please provide a correct user ID!`
-      );
-    }
-
-    // Check if trainedUserID is a number
-
-    const numberCheck = parseInt(trainedUserID);
-
-    if (isNaN(numberCheck)) {
-      return message.channel.send(`User ID is not a number!`);
-    }
 
     // Check if user has specified roles
     if (!member) {
@@ -35,6 +16,26 @@ module.exports.run = async (client, message, args) => {
         "You are not authorized to use this command."
       );
     } else if (member) {
+    
+      if (trainedUserID === undefined) {
+        return message.channel.send(`Please provide an argument!`);
+      }
+
+      // Make sure user ID is 17 characters long.
+      if (trainedUserID.length < 17) {
+        return message.channel.send(
+          `A user ID must be at LEAST 17 characters long! Please provide a correct user ID!`
+        );
+      }
+
+      // Check if trainedUserID is a number
+
+      const numberCheck = parseInt(trainedUserID);
+
+      if (isNaN(numberCheck)) {
+        return message.channel.send(`User ID is not a number!`);
+      }
+
       // Check if the user is training themselves.
       if (trainedUserID === message.author.id) {
         return message.channel.send(`You may not train yourself!`);
@@ -60,11 +61,6 @@ module.exports.run = async (client, message, args) => {
       }
 
       // Send a message to the channel indicating that a channel is being created
-
-      const trainedUser = await client.users.fetch(`${trainedUserID}`);
-      const trainedUserID = await trainedUser.tag;
-      console.log(trainedUser);
-
       await message.channel
         .send("Creating channel...")
         .then(async (originalMessage) => {
