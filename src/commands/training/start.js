@@ -5,6 +5,10 @@ exports.run = async (client, message, args) => {
     const member = message.member.roles.cache.has("1209983942216908932");
     const trainedUserID = args[0];
 
+    if (trainedUserID === undefined) {
+      return message.channel.send(`Please provide an argument!`)
+    }
+    
     // Make sure user ID is 17 characters long.
     if (trainedUserID.length < 17) {
       return message.channel.send(
