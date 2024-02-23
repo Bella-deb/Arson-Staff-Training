@@ -56,7 +56,7 @@ exports.run = async (client, message, args) => {
         .then(async (originalMessage) => {
           // After sending the message, create the channel
           const createdChannel = await message.guild.channels.create({
-            name: `${`testing-area`}`,
+            name: `${`${trainedUserID}-testing-area`}`,
             topic: "Channel used for Modmail training!",
             parent: "1210368758325968917",
             permissionOverwrites: [
