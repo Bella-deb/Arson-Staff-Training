@@ -4,9 +4,9 @@ const package = require("../../../package.json");
 module.exports = {
   name: "botinfo",
   aliases: ["bi"],
-}
+};
 
-module.exports.run = (client, message, args) => {
+module.exports.run = async (client, message, args) => {
   // Get the total number of users in all guilds the bot is in
   const totalUsers = client.users.cache.size;
 
@@ -37,5 +37,5 @@ module.exports.run = (client, message, args) => {
 🏷️ **Total Commands:** ${client.totalCommands}`
     );
 
-  message.channel.send({ embeds: [embed] });
+  await message.channel.send({ embeds: [embed] });
 };

@@ -7,7 +7,7 @@ module.exports = {
   aliases: ["h", "commands"],
 }
 
-exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args) => {
   console.log(
     `${bold("Help Command Used:")}\nUser: ${message.author.tag}\nUser ID: ${
       message.author.id

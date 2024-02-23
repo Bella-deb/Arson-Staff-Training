@@ -4,7 +4,7 @@ const Discord = require("discord.js"); // Importing the 'discord.js' library
 module.exports = {
   name: "ping",
   aliases: ["p"],
-}
+};
 
 module.exports.run = async (client, message, args) => {
   // Make embed show "pinging..."

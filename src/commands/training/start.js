@@ -60,6 +60,11 @@ module.exports.run = async (client, message, args) => {
       }
 
       // Send a message to the channel indicating that a channel is being created
+
+      const trainedUser = await client.users.fetch(`${trainedUserID}`);
+      const trainedUserID = await trainedUser.tag;
+      console.log(trainedUser);
+
       await message.channel
         .send("Creating channel...")
         .then(async (originalMessage) => {

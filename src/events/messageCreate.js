@@ -1,17 +1,11 @@
 const { bold } = require("colorette"); // Importing the 'bold' function from the 'colorette' package
 
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
   // Ignore all bots
   if (message.author.bot) return;
 
   // Ignore messages not starting with the prefix (in config.json)
   if (message.content.indexOf(client.config.prefix) !== 0) return;
-
-  console.log(
-    `${bold("Command Used:")}\nUser: ${message.author.tag}\nUser ID: ${
-      message.author.id
-    }\nChannel ID: ${message.channel.id}\n`
-  );
 
   // Make sure messages don't contain bot token
   if (message.content.includes("client.token")) {
@@ -32,5 +26,9 @@ module.exports = (client, message) => {
   if (!cmd) return;
 
   // Run the command
-  cmd.run(client, message, args);
+  await cmd.run(client, message, args).then(console.log(
+    `${bold(`${cmd.name} Command Used:`)}\nUser: ${message.author.tag}\nUser ID: ${
+      message.author.id
+    }\nChannel ID: ${message.channel.id}\n`
+  ));
 };

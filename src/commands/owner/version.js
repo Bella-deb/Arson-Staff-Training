@@ -10,7 +10,7 @@ module.exports = {
   aliases: ["v", "ver", "dependencies"],
 }
 
-module.exports.run = (client, message, args) => {
+module.exports.run = async (client, message, args) => {
   try {
     if (!allowedUsers.includes(message.author.id)) {
       throw new Error("You are not authorized to use this command.");
@@ -30,11 +30,6 @@ module.exports.run = (client, message, args) => {
     // Send to Channel
     message.channel.send({ embeds: [embed] });
 
-    console.log(
-      `${bold("Version Command Used:")}\nUser: ${
-        message.author.tag
-      }\nUser ID: ${message.author.id}\nChannel ID: ${message.channel.id}\n`
-    );
   } catch (error) {
     console.error("An error occurred:", error.message);
     message.channel.send(`An error occurred: ${error.message}`);
