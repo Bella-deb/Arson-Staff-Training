@@ -26,7 +26,7 @@ exports.run = async (client, message, args, level) => {
   try {
     const evaled = eval(code);
     const cleaned = await clean(client, evaled);
-    if (cleaned.length >= 2000) {
+    if (cleaned.length > 2000) {
       return message.channel.send("Error: Message is over 2000 characters.");
     }
     message.channel.send(`**Output:**\n${codeBlock("js", cleaned)}`);

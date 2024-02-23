@@ -13,8 +13,7 @@ exports.run = (client, message, args) => {
 
     const embed = new Discord.EmbedBuilder()
       .setTitle(`Bot & Dependency Version`)
-      .setColor("Random")
-      .setDescription(`
+      .setColor("Random").setDescription(`
         > **Versions**
         💽 **Bot Version:** ${package.version}
         💽 **Discord.JS Version:** ${package.dependencies["discord.js"]}
@@ -26,7 +25,11 @@ exports.run = (client, message, args) => {
     // Send to Channel
     message.channel.send({ embeds: [embed] });
 
-    console.log(`${bold("Version Command Used:")}\nUser: ${message.author.tag}\nUser ID: ${message.author.id}\nChannel ID: ${message.channel.id}\n`);
+    console.log(
+      `${bold("Version Command Used:")}\nUser: ${
+        message.author.tag
+      }\nUser ID: ${message.author.id}\nChannel ID: ${message.channel.id}\n`
+    );
   } catch (error) {
     console.error("An error occurred:", error.message);
     message.channel.send(`An error occurred: ${error.message}`);
@@ -34,4 +37,3 @@ exports.run = (client, message, args) => {
 };
 
 exports.name = "version";
-

@@ -25,12 +25,6 @@ exports.run = async (client, message, args) => {
   } else {
     console.log("Bot is not ready yet. Waiting for the ready event...");
   }
-
-  console.log(
-    `${bold("Ping Command Used:")}\nUser: ${message.author.tag}\nUser ID: ${
-      message.author.id
-    }`
-  );
 };
 
 exports.name = "ping";

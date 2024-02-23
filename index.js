@@ -1,6 +1,6 @@
-const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 const config = require("./config.json");
 
 // Declare client
@@ -43,25 +43,26 @@ client.commands = new Collection();
 
 function readFilesRecursively(directory, fileList = []) {
   const files = fs.readdirSync(directory);
-  files.forEach(file => {
-      const filePath = path.join(directory, file);
-      if (fs.statSync(filePath).isDirectory()) {
-          // If it's a directory, recursively read its files
-          readFilesRecursively(filePath, fileList);
-      } else {
-          // If it's a file, add it to the list
-          fileList.push(filePath);
-      }
+  files.forEach((file) => {
+    const filePath = path.join(directory, file);
+    if (fs.statSync(filePath).isDirectory()) {
+      // If it's a directory, recursively read its files
+      readFilesRecursively(filePath, fileList);
+    } else {
+      // If it's a file, add it to the list
+      fileList.push(filePath);
+    }
   });
   return fileList;
 }
 
 // Directory containing commands
-const commandsDir = './commands';
+const commandsDir = "./commands";
 
 // Get all JavaScript files recursively from the commands directory
-const commandFiles = readFilesRecursively(commandsDir)
-  .filter(file => file.endsWith('.js'));
+const commandFiles = readFilesRecursively(commandsDir).filter((file) =>
+  file.endsWith(".js")
+);
 
 // Get Total Commands, make it available through client, and log it
 client.totalCommands = commandFiles.length;
