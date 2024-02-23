@@ -7,8 +7,10 @@ exports.run = async (client, message, args) => {
     .setTitle("Ping Command:")
     .setDescription(`Awaiting Pinging...`);
 
+  // Send pinging to channel
   const msg = await message.channel.send({ embeds: [pinging] });
 
+  // Get latency inside of an embed
   const pingEmbed = new Discord.EmbedBuilder().setTitle(
     "Ping Command:"
   ).setDescription;
