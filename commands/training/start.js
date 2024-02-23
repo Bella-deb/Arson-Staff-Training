@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const { codeBlock } = require("@discordjs/builders");
 
 exports.run = async (client, message, args) => {
   try {
@@ -8,15 +7,17 @@ exports.run = async (client, message, args) => {
 
     // Make sure user ID is 17 characters long.
     if (trainedUserID.length < 17) {
-      return message.channel.send(`A user ID must be at LEAST 17 characters long! Please provide a correct user ID!`);
+      return message.channel.send(
+        `A user ID must be at LEAST 17 characters long! Please provide a correct user ID!`
+      );
     }
 
     // Check if trainedUserID is a number
 
-    const numberCheck = await parseInt(trainedUserID);
+    const numberCheck = parseInt(trainedUserID);
 
     if (isNaN(numberCheck)) {
-      return message.channel.send(`User ID is not a number!`)
+      return message.channel.send(`User ID is not a number!`);
     }
 
     // Check if user has specified roles
@@ -24,7 +25,7 @@ exports.run = async (client, message, args) => {
       return await message.channel.send(
         "You are not authorized to use this command."
       );
-    } else if (member) {      
+    } else if (member) {
       // Check if the user is training themselves.
       if (trainedUserID === message.author.id) {
         return message.channel.send(`You may not train yourself!`);
@@ -90,9 +91,12 @@ exports.run = async (client, message, args) => {
           const trainingEmbed = new Discord.EmbedBuilder()
             .setTitle("Training Information:")
             .setDescription(
-              `Hello <@${trainedUserID}>, Welcome to Arson's Modmail training! Your trainer is <@${message.author.id}>.
-Please make sure to read over <#1206966054174072862> before answering the questions below. Copy the codeblock then answer the questions, goodluck!
-${codeBlock(`1. How do you reply to a modmail thread?
+              `Hello <@${trainedUserID}>, Welcome to Arson's Modmail training! Your trainer is <@${message.author.id}>.\n\nPlease make sure to read over <#1206966054174072862> before answering the questions below. Copy the codeblock then answer the questions, goodluck!\n\n`
+            )
+            .addFields({
+              name: `Questions:`,
+              value: [
+                `\`\`\`1. How do you reply to a modmail thread?
 2. How do you close a Modmail thread?
 3. How do you add a user to a modmail thread?
 4. How should you greet a user?
@@ -103,12 +107,10 @@ ${codeBlock(`1. How do you reply to a modmail thread?
 
 6. What would you do in the situation where a user wants to report somebody?
 7. What would you do if somebody asked to partner?
-8. What would you do if a user is abusing the Modmail?`)}
-
-Once you are finished, please run the ..finish command.
-`
-
-            );
+8. What would you do if a user is abusing the Modmail?
+Once you are finished, please run the ..finish command.\`\`\``,
+              ].join("\n"),
+            });
 
           createdChannel
             .send(`<@${message.author.id}> <@${trainedUserID}>`)

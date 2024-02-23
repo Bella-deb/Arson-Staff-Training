@@ -1,1 +1,3 @@
-// for future use
+exports.run = async (client, message, args) => {
+
+}
