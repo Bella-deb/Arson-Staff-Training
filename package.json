@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "update": "echo \"Updating...\" && npm update"
+    "update": "echo \"Updating...\" && npm update",
+    "bot": "cd src && clear && nodemon"
   },
   "keywords": [],
   "author": "",
