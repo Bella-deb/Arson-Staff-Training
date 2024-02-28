@@ -102,7 +102,12 @@ module.exports.run = async (client, message, args) => {
         );
     }
   } catch (error) {
-    console.log("An error occurred:", error);
-    message.channel.send(`An error occurred!`);
+    if (error.code === "ETIMEDOUT") {
+      console.log("Timeout error occurred:", error.message);
+      message.channel.send(`The command timed out. Please try again later.`);
+    } else {
+      console.log("An error occurred:", error);
+      message.channel.send(`An error occurred!`);
+    }
   }
 };
