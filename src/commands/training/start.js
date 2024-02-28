@@ -86,7 +86,7 @@ module.exports.run = async (client, message, args) => {
           const createdChannel = await message.guild.channels.create({
             name: `${`${trainedUserID}-training-area`}`,
             topic: "Channel used for Modmail training!",
-            parent: "1210368758325968917",
+            parent: "1212510686786359396",
             permissionOverwrites: [
               {
                 id: client.user.id,

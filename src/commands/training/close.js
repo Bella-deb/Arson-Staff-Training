@@ -70,6 +70,8 @@ module.exports.run = async (client, message, args) => {
       const bella = await client.users.fetch("860974614905094144");
       const hailey = await client.users.fetch("1060069099662749696");
 
+      const trainingLogChannel = await message.guild.channels.fetch('1212510807007694908')
+
       message.author
         .send({
           files: [`./logs/${filename}.txt`], // Attach the generated file
@@ -82,6 +84,12 @@ module.exports.run = async (client, message, args) => {
               content: `Here's the message log for #${channel.name}!`, // Optional message
             })
             .then(console.log("File sent to Bella!"))
+        )
+        .then(
+          trainingLogChannel.send({
+            files: [`./logs/${filename}.txt`],
+            content: `Here's the message log for #${channel.name}!`,
+          })
         )
         .then(() => {
           console.log(`File sent to ${message.author.tag}`);
