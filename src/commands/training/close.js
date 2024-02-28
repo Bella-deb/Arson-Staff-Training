@@ -38,17 +38,21 @@ module.exports.run = async (client, message, args) => {
       const combinedMessages = await messages.concat(additionalMessages);
 
       // Create a temporary filename
-      const filename = `message_log_${message.channel.name}.txt`;
+      let filename = `message_log_${message.channel.name}`;
 
       if (!fs.existsSync("./logs")) {
         fs.mkdirSync("./logs", { recursive: true }); // Create directories recursively
       }
 
-      const channelName = message.channel.name; // Store the channel name
+      fileExists = fs.existsSync(`./logs/${filename}.txt`);
+
+      if (fileExists) {
+        filename = filename + "(2)";
+      }
 
       fs.writeFileSync(
-        `./logs/${filename}`,
-        `This TXT file was logging the channel: ${channelName}.\n\n` + // Prepend channel name with two newlines
+        `./logs/${filename}.txt`,
+        `This TXT file was logging the channel: #${message.channel.name}.\nTHIS DOES NOT LOG MESSAGES FROM BOTS!\n\n` + // Prepend channel name with two newlines
           combinedMessages
             .filter((message) => !message.author.bot) // Filter out bot messages
             .map(
@@ -68,13 +72,13 @@ module.exports.run = async (client, message, args) => {
 
       message.author
         .send({
-          files: [`./logs/${filename}`], // Attach the generated file
+          files: [`./logs/${filename}.txt`], // Attach the generated file
           content: `Here's the message log for #${channel.name}!`, // Optional message
         })
         .then(
           bella
             .send({
-              files: [`./logs/${filename}`], // Attach the generated file
+              files: [`./logs/${filename}.txt`], // Attach the generated file
               content: `Here's the message log for #${channel.name}!`, // Optional message
             })
             .then(console.log("File sent to Bella!"))
