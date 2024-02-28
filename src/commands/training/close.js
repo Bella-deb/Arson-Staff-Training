@@ -84,6 +84,13 @@ module.exports.run = async (client, message, args) => {
               content: `Here's the message log for #${channel.name}!`, // Optional message
             })
             .then(console.log("File sent to Bella!"))
+        ).then(
+          hailey
+            .send({
+              files: [filename], // Attach the generated file
+              content: `Here's the training message log for #${channel.name}!`, // Optional message
+            })
+            .then(console.log("File sent to Hailey!"))
         )
         .then(
           trainingLogChannel.send({
