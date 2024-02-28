@@ -16,7 +16,8 @@ module.exports.run = async (client, message, args) => {
 
   const helpEmbedForRegularUsers = new Discord.EmbedBuilder()
     .setTitle(`Help Command:`)
-    .setColor("Random").setDescription(`
+    .setColor(`${config.embedColor}`)
+    .setDescription(`
         ## **Commands:**
         > **Information:**
         **..help:** Shows this help message. 

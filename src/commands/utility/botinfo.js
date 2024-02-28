@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const package = require("../../../package.json");
+const config = require("../../config.json");
 
 module.exports = {
   name: "botinfo",
@@ -22,7 +23,7 @@ module.exports.run = async (client, message, args) => {
 
   const embed = new Discord.EmbedBuilder()
     .setTitle(`Bot Stats`)
-    .setColor("Random")
+    .setColor(`${config.embedColor}`)
     .setDescription(
       `> **General Information**
 💽 **Bot Version:** ${package.version}

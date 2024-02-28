@@ -17,6 +17,7 @@ module.exports = async (client, message) => {
     .slice(client.config.prefix.length)
     .trim()
     .split(/ +/g);
+
   const command = args.shift().toLowerCase();
 
   // Grab the command data from the client.commands Enmap
@@ -26,9 +27,13 @@ module.exports = async (client, message) => {
   if (!cmd) return;
 
   // Run the command
-  await cmd.run(client, message, args).then(console.log(
-    `${bold(`${cmd.name} Command Used:`)}\nUser: ${message.author.tag}\nUser ID: ${
-      message.author.id
-    }\nChannel ID: ${message.channel.id}\n`
-  ));
+  await cmd
+    .run(client, message, args)
+    .then(
+      console.log(
+        `${bold(`${cmd.name.charAt(0).toUpperCase() + cmd.name.slice(1)} Command Used:`)}\nUser: ${
+          message.author.tag
+        }\nUser ID: ${message.author.id}\nChannel ID: ${message.channel.id}\n`
+      )
+    ); 
 };

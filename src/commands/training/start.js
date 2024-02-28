@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const config = require("../../config.json");
 
 module.exports = {
   name: "start",
@@ -16,7 +17,6 @@ module.exports.run = async (client, message, args) => {
         "You are not authorized to use this command."
       );
     } else if (member) {
-    
       if (trainedUserID === undefined) {
         return message.channel.send(`Please provide an argument!`);
       }
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
       const numberCheck = parseInt(trainedUserID);
 
       if (isNaN(numberCheck)) {
-        return message.channel.send(`User ID is not a number!`);
+        return message.channel.senFd(`User ID is not a number!`);
       }
 
       // Check if the user is training themselves.
@@ -54,10 +54,28 @@ module.exports.run = async (client, message, args) => {
       }
 
       // Check if command is ran inside a training channel
-      if (message.channel.name === "testing-area") {
+      if (message.channel.name === "training-area") {
         return message.channel.send(
-          "Command may not be ran inside of a testing area!"
+          "Command may not be ran inside of a training area!"
         );
+      }
+
+      const channelNameLookingFor = trainedUserID;
+
+      const guild = client.guilds.cache.get(`${message.guild.id}`);
+
+      const channels = await guild.channels.fetch();
+
+      const matchingChannels = channels.filter(
+        (channel) =>
+          channel instanceof Discord.GuildChannel &&
+          channel.name
+            .toLowerCase()
+            .includes(channelNameLookingFor.toLowerCase())
+      );
+
+      if (matchingChannels.size > 0) {
+        return message.channel.send(`This user already has a training opened!`);
       }
 
       // Send a message to the channel indicating that a channel is being created
@@ -66,7 +84,7 @@ module.exports.run = async (client, message, args) => {
         .then(async (originalMessage) => {
           // After sending the message, create the channel
           const createdChannel = await message.guild.channels.create({
-            name: `${`${trainedUserID}-testing-area`}`,
+            name: `${`${trainedUserID}-training-area`}`,
             topic: "Channel used for Modmail training!",
             parent: "1210368758325968917",
             permissionOverwrites: [
@@ -100,6 +118,7 @@ module.exports.run = async (client, message, args) => {
 
           const trainingEmbed = new Discord.EmbedBuilder()
             .setTitle("Training Information:")
+            .setColor(`${config.embedColor}`)
             .setDescription(
               `Hello <@${trainedUserID}>, Welcome to Arson's Modmail training! Your trainer is <@${message.author.id}>.\n\nPlease make sure to read over <#1206966054174072862> before answering the questions below. Copy the codeblock then answer the questions, goodluck!\n\n`
             )

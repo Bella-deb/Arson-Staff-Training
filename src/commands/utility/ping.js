@@ -1,5 +1,6 @@
 const { bold } = require("colorette"); // Importing the 'bold' function from the 'colorette' package
 const Discord = require("discord.js"); // Importing the 'discord.js' library
+const config = require("../../config.json");
 
 module.exports = {
   name: "ping",
@@ -10,6 +11,7 @@ module.exports.run = async (client, message, args) => {
   // Make embed show "pinging..."
   const pinging = new Discord.EmbedBuilder()
     .setTitle("Ping Command:")
+    .setColor("Random")
     .setDescription(`Awaiting Pinging...`);
 
   // Send pinging to channel
@@ -22,6 +24,7 @@ module.exports.run = async (client, message, args) => {
   if (client.readyAt) {
     const pingEmbed = new Discord.EmbedBuilder()
       .setTitle("Ping Command:")
+      .setColor(`${config.embedColor}`)
       .setDescription(
         `> 🏓 Bot Latency: **${
           Date.now() - message.createdTimestamp

@@ -1,9 +1,11 @@
 const { Client, Partials, GatewayIntentBits, Collection } = require("discord.js");
+const { bold } = require("colorette"); // Importing the 'bold' function from the 'colorette' package
 const Discord = require('discord.js');
 const fs = require("fs");
 const path = require("path");
 const config = require("./config.json");
-const { bold } = require("colorette"); // Importing the 'bold' function from the 'colorette' package
+
+const token = config.token;
 
 // Declare client
 const client = new Client({
@@ -11,19 +13,16 @@ const client = new Client({
   fetchAllMembers: true,
   messageCacheMaxSize: 10,
   restTimeOffset: 0,
-  restWsBridgetimeout: 100,
+  restWsBridgetimeout: 500,
   partials: [
     Partials.Message,
     Partials.Channel,
     Partials.Reaction,
     Partials.User,
-    Partials.GuildMember,
-    Partials.DirectMessages,
+    Partials.GuildMember
   ],
   intents:
-    3276799 |
-    GatewayIntentBits.MessageContent |
-    GatewayIntentBits.DirectMessages,
+    3276799
 });
 
 // Make config available everywhere
@@ -73,8 +72,8 @@ for (const file of commandFiles) {
   const command = require(path.resolve(file));
 
   // Log every command being loaded
-  console.log(`Attempting to load command ${bold(commandName)}`);
+  console.log(`Attempting to load ${bold(commandName)} command.`);
   client.commands.set(commandName, command);
 }
 
-client.login(config.token);
+client.login(token);

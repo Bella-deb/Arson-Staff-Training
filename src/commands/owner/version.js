@@ -18,7 +18,8 @@ module.exports.run = async (client, message, args) => {
 
     const embed = new Discord.EmbedBuilder()
       .setTitle(`Bot & Dependency Version`)
-      .setColor("Random").setDescription(`
+      .setColor(`${config.embedColor}`)
+      .setDescription(`
         > **Versions**
         💽 **Bot Version:** ${package.version}
         💽 **Discord.JS Version:** ${package.dependencies["discord.js"]}
