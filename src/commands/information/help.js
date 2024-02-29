@@ -24,6 +24,8 @@ module.exports.run = async (client, message, args) => {
 
         > **Training:**
         **..start:** Start a training area with a specific user.
+        **..finish** For the trannie to finish their training.
+        **..close** For the trainer to close a training ticket.
 
         > **Utility:**
         **..ping:** Pings the bot and shows bot and API latency.
@@ -36,10 +38,11 @@ module.exports.run = async (client, message, args) => {
           ## **Commands:**
           > **Information:**
           **..help:** Shows this help message. 
-          **..version:** Shows bot version and dependecy versions.
 
           > **Training:**
           **..start:** Start a training area with a specific user.
+          **..finish** For the trannie to finish their training.
+          **..close** For the trainer to close a training ticket.
   
           > **Utility:**
           **..ping:** Pings the bot and shows bot and API latency.
@@ -47,6 +50,7 @@ module.exports.run = async (client, message, args) => {
 
           > **Owner:**
           **..eval:** Eval something. 
+          **..version:** Shows bot version and dependecy versions.
         `);
 
   if (!config.ownerID.includes(message.author.id)) {
