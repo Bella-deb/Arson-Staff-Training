@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const config = require("../../config.json");
+const trainingConfig = require("../../training.json");
 
 module.exports = {
   name: "start",
@@ -8,6 +9,8 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   try {
+    const logChannel = client.channels.cache.get(trainingConfig.trainingLogChannel);
+
     const member = message.member.roles.cache.has("1209983942216908932");
     const trainedUserID = args[0];
 
@@ -33,7 +36,7 @@ module.exports.run = async (client, message, args) => {
       const numberCheck = parseInt(trainedUserID);
 
       if (isNaN(numberCheck)) {
-        return message.channel.senFd(`User ID is not a number!`);
+        return message.channel.send(`User ID is not a number!`);
       }
 
       // Check if the user is training themselves.
@@ -83,38 +86,40 @@ module.exports.run = async (client, message, args) => {
         .send("Creating channel...")
         .then(async (originalMessage) => {
           // After sending the message, create the channel
-          const createdChannel = await message.guild.channels.create({
-            name: `${`${trainedUserID}-training-area`}`,
-            topic: "Channel used for Modmail training!",
-            parent: `${config.trainingCategory}`,
-            permissionOverwrites: [
-              {
-                id: client.user.id,
-                allow: [
-                  Discord.PermissionsBitField.Flags.SendMessages,
-                  Discord.PermissionsBitField.Flags.ViewChannel,
-                ],
-              },
-              {
-                id: message.author.id,
-                allow: [
-                  Discord.PermissionsBitField.Flags.SendMessages,
-                  Discord.PermissionsBitField.Flags.ViewChannel,
-                ],
-              },
-              {
-                id: trainedUserID,
-                allow: [
-                  Discord.PermissionsBitField.Flags.SendMessages,
-                  Discord.PermissionsBitField.Flags.ViewChannel,
-                ],
-              },
-              {
-                id: message.guild.id,
-                deny: [Discord.PermissionsBitField.Flags.ViewChannel],
-              },
-            ],
-          });
+          const createdChannel = await message.guild.channels
+            .create({
+              name: `${`${trainedUserID}-training-area`}`,
+              topic: "Channel used for Modmail training!",
+              parent: `${trainingConfig.trainingCategory}`,
+              permissionOverwrites: [
+                {
+                  id: client.user.id,
+                  allow: [
+                    Discord.PermissionsBitField.Flags.SendMessages,
+                    Discord.PermissionsBitField.Flags.ViewChannel,
+                  ],
+                },
+                {
+                  id: message.author.id,
+                  allow: [
+                    Discord.PermissionsBitField.Flags.SendMessages,
+                    Discord.PermissionsBitField.Flags.ViewChannel,
+                  ],
+                },
+                {
+                  id: trainedUserID,
+                  allow: [
+                    Discord.PermissionsBitField.Flags.SendMessages,
+                    Discord.PermissionsBitField.Flags.ViewChannel,
+                  ],
+                },
+                {
+                  id: message.guild.id,
+                  deny: [Discord.PermissionsBitField.Flags.ViewChannel],
+                },
+              ],
+            })
+            .then(logChannel.send("A new training has been opened!"));
 
           const trainingEmbed = new Discord.EmbedBuilder()
             .setTitle("Training Information:")
@@ -152,12 +157,13 @@ Once you are finished, please run the ..finish command.\`\`\``,
         });
     }
   } catch (error) {
-    if (error.code === 'ETIMEDOUT') { // Check for timeout error code
+    if (error.code === "ETIMEDOUT") {
+      // Check for timeout error code
       console.log("Timeout error occurred:", error.message);
       message.channel.send(`The command timed out. Please try again later.`);
     } else {
       console.log("An error occurred:", error);
       message.channel.send(`An error occurred!`);
     }
-}
+  }
 };

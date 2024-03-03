@@ -41,7 +41,6 @@ module.exports.run = async (client, message, args, level) => {
     message.channel.send(errorMessage);
     console.error(`Eval command error message: ${errorMessage}`);
   }
-  console.log(`${message.author.tag} has used the eval command!`);
 };
 
 exports.name = "eval";

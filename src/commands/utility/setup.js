@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fs = require("fs");
 
 const config = require("../../config.json");
 const allowedUsers = config.ownerID;
@@ -50,6 +51,30 @@ module.exports.run = async (client, message, args) => {
           ],
         })
         .then(message.channel.send("Training logs channel created!"));
+
+        fs.readFile('/home/bella/code/Discord Bots/Arson Staff Training/src/training.json', 'utf8', (err, data) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        
+          // Parse the JSON data
+          const jsonData = JSON.parse(data);
+        
+          // Modify the desired value
+          jsonData.trainingCategory = trainingCategory.id;
+          jsonData.trainingLogChannel = trainingLogChannel.id;
+        
+          // Write the updated data back to the file
+          fs.writeFile('training.json', JSON.stringify(jsonData), (err) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+        
+            console.log('JSON file updated successfully!');
+          });
+        });
     }
   } catch (error) {
     if (error.code === "ETIMEDOUT") {
