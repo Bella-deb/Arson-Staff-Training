@@ -16,6 +16,39 @@ module.exports.run = async (client, message, args) => {
         "You are not authorized to use this command."
       );
     } else if (allowedUsers.includes(message.author.id)) {
+
+      const categoryNameLookingFor = "৻ TRAINING ⋆˚｡⁺⋆";
+      const channelNameLookingFor = "";
+
+      const guild = client.guilds.cache.get(`${message.guild.id}`);
+
+      const channels = await guild.channels.fetch();
+
+      const matchingCategory = channels.filter(
+        (channel) =>
+          channel instanceof Discord.CategoryChannel &&
+          channel.name
+            .toLowerCase()
+            .includes(categoryNameLookingFor.toLowerCase())
+      );
+
+      if (matchingCategory.size > 0) {
+        return message.channel.send(`TThis server already has a training category!`);
+      }
+
+      const matchingChannel = channels.filter(
+        (channel) =>
+          channel instanceof Discord.GuildChannel &&
+          channel.name
+            .toLowerCase()
+            .includes(channelNameLookingFor.toLowerCase())
+      );
+
+      if (matchingChannel.size > 0) {
+        return message.channel.send(`TThis server already has a training channel!`);
+      }
+
+
       const trainingCategory = await message.guild.channels
         .create({
           name: "৻ TRAINING ⋆˚｡⁺⋆",
@@ -52,7 +85,7 @@ module.exports.run = async (client, message, args) => {
         })
         .then(message.channel.send("Training logs channel created!"));
 
-        fs.readFile('/home/bella/code/Discord Bots/Arson Staff Training/src/training.json', 'utf8', (err, data) => {
+        fs.readFile('/home/bella/code/Discord Bots/Arson Staff Training/src/training.json', 'utf8', (err, data) => { 
           if (err) {
             console.error(err);
             return;

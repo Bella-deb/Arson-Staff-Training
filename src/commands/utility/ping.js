@@ -8,6 +8,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
+  try {
   // Make embed show "pinging..."
   const pinging = new Discord.EmbedBuilder()
     .setTitle("Ping Command:")
@@ -35,4 +36,14 @@ module.exports.run = async (client, message, args) => {
   } else {
     console.log("Bot is not ready yet. Waiting for the ready event...");
   }
+} catch (error) {
+  if (error.code === "ETIMEDOUT") {
+    // Check for timeout error code
+    console.log("Timeout error occurred:", error.message);
+    message.channel.send(`The command timed out. Please try again later.`);
+  } else {
+    console.log("An error occurred:", error);
+    message.channel.send(`An error occurred!`);
+  }
+}
 };
