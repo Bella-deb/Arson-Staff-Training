@@ -5,7 +5,7 @@ const config = require("../../config.json");
 module.exports = {
   name: "help",
   aliases: ["h", "commands"],
-}
+};
 
 module.exports.run = async (client, message, args) => {
   console.log(
@@ -15,42 +15,68 @@ module.exports.run = async (client, message, args) => {
   );
 
   const helpEmbedForRegularUsers = new Discord.EmbedBuilder()
-    .setTitle(`Help Command:`)
-    .setColor(`${config.embedColor}`)
-    .setDescription(`
-        ## **Commands:**
-        > **Information:**
-        **..help:** Shows this help message. 
+    .setAuthor({
+      name: `Arson Staff Training`,
+      iconURL: `https://cdn.discordapp.com/avatars/1209283589519446127/1a3adea2ba6c81f3fe0a48d91cdd64b8.webp?size=1024&format=webp&width=0&height=256`,
+    })
+    .setTitle(`Commands:`)
+    .setColor(`${config.embedColor}`).setDescription(`
+        🗒️ **Information:**
+        **..help** 
+        Shows this help message 
 
-        > **Training:**
-        **..start:** Start a training area with a specific user.
-        **..finish:** For the trannie to finish their training.
-        **..close:** For the trainer to close a training ticket.
+        🚆 **Training:**
+        **..start** 
+        Start a training area with a specific user
 
-        > **Utility:**
-        **..ping:** Pings the bot and shows bot and API latency.
-        **..botinfo:** Shows statistics about the bot.
+        **..finish** 
+        For the trannie to finish their training
+
+        **..close** 
+        For the trainer to close a training ticket
+
+        🔧 **Utility**
+        **..ping** 
+        Pings the bot and shows bot and API latency
+
+        **..botinfo** 
+        Shows statistics about the bot
       `);
 
   const helpEmbedForOwners = new Discord.EmbedBuilder()
-    .setTitle(`Help Command:`)
+    .setAuthor({
+      name: `Arson Staff Training`,
+      iconURL: `https://cdn.discordapp.com/avatars/1209283589519446127/1a3adea2ba6c81f3fe0a48d91cdd64b8.webp?size=1024&format=webp&width=0&height=256`,
+    })
+    .setTitle(`Commands:`)
     .setColor("Random").setDescription(`
-          ## **Commands:**
-          > **Information:**
-          **..help:** Shows this help message. 
+          > 🗒️ **Information:**
+          **..help** 
+          Shows this help message
 
-          > **Training:**
-          **..start:** Start a training area with a specific user.
-          **..finish:** For the trannie to finish their training.
-          **..close:** For the trainer to close a training ticket.
+          > 🚆 **Training:**
+          **..start** 
+          Start a training area with a specific user
+
+          **..finish** 
+          For the trannie to finish their training
+
+          **..close** 
+          For the trainer to close a training ticket
   
-          > **Utility:**
-          **..ping:** Pings the bot and shows bot and API latency.
-          **..botinfo:** Shows statistics about the bot.
+          > 🔧 **Utility:**
+          **..ping** 
+          Pings the bot and shows bot and API latency
 
-          > **Owner:**
-          **..eval:** Eval something. 
-          **..version:** Shows bot version and dependecy versions.
+          **..botinfo** 
+          Shows statistics about the bot such as when the bot was created and server count
+
+          > 👑 **Owner:**
+          **..eval** 
+          Execute JavaScript code
+
+          **..version** 
+          Shows bot & dependecy versions
         `);
 
   if (!config.ownerID.includes(message.author.id)) {
