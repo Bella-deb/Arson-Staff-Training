@@ -8,15 +8,13 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   try {
-    if (!message.channel.name.includes(message.author.id)) {
+    if (!message.channel.name.includes(`${message.author.id}-training-area`)) {
       return message.channel.send(
         "You are not authorized to use this command."
       );
-    }
-
-    if (!message.channel.name === `${message.author.id}-testing-area`) {
-      return message.channel.send("You may not run this command here.");
-    } else if (message.channel.name === `${message.author.id}-testing-area`) {
+    } else if (
+      message.channel.name.includes(`${message.author.id}-training-area`)
+    ) {
       const trainerID = args[0];
 
       // Make sure a user is providing an argument

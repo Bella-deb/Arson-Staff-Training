@@ -24,8 +24,8 @@ module.exports.run = async (client, message, args) => {
 
         > **Training:**
         **..start:** Start a training area with a specific user.
-        **..finish** For the trannie to finish their training.
-        **..close** For the trainer to close a training ticket.
+        **..finish:** For the trannie to finish their training.
+        **..close:** For the trainer to close a training ticket.
 
         > **Utility:**
         **..ping:** Pings the bot and shows bot and API latency.
@@ -41,8 +41,8 @@ module.exports.run = async (client, message, args) => {
 
           > **Training:**
           **..start:** Start a training area with a specific user.
-          **..finish** For the trannie to finish their training.
-          **..close** For the trainer to close a training ticket.
+          **..finish:** For the trannie to finish their training.
+          **..close:** For the trainer to close a training ticket.
   
           > **Utility:**
           **..ping:** Pings the bot and shows bot and API latency.

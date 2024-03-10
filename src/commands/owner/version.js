@@ -8,7 +8,7 @@ const allowedUsers = config.ownerID;
 module.exports = {
   name: "version",
   aliases: ["v", "ver", "dependencies"],
-}
+};
 
 module.exports.run = async (client, message, args) => {
   try {
@@ -18,8 +18,7 @@ module.exports.run = async (client, message, args) => {
 
     const embed = new Discord.EmbedBuilder()
       .setTitle(`Bot & Dependency Version`)
-      .setColor(`${config.embedColor}`)
-      .setDescription(`
+      .setColor(`${config.embedColor}`).setDescription(`
         > **Versions**
         💽 **Bot Version:** ${package.version}
         💽 **Discord.JS Version:** ${package.dependencies["discord.js"]}
@@ -30,7 +29,6 @@ module.exports.run = async (client, message, args) => {
 
     // Send to Channel
     message.channel.send({ embeds: [embed] });
-
   } catch (error) {
     console.error("An error occurred:", error.message);
     message.channel.send(`An error occurred: ${error.message}`);

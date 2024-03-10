@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { DateTime } = require("luxon");
 const fs = require("fs");
 const trainingConfig = require("../../training.json");
 
@@ -45,12 +46,6 @@ module.exports.run = async (client, message, args) => {
         fs.mkdirSync("./logs", { recursive: true }); // Create directories recursively
       }
 
-      fileExists = fs.existsSync(`./logs/${filename}.txt`);
-
-      if (fileExists) {
-        filename = `${filename}(2)`;
-      }
-
       fs.writeFileSync(
         `./logs/${filename}.txt`,
         `This TXT file was logging the channel: #${message.channel.name}.\nTHIS DOES NOT LOG MESSAGES FROM BOTS!\n\n` + // Prepend channel name with two newlines
@@ -71,7 +66,9 @@ module.exports.run = async (client, message, args) => {
       const bella = await client.users.fetch("860974614905094144");
       const hailey = await client.users.fetch("1060069099662749696");
 
-      const trainingLogChannel = await message.guild.channels.fetch(`${trainingConfig.trainingLogChannel}`)
+      const trainingLogChannel = await message.guild.channels.fetch(
+        `${trainingConfig.trainingLogChannel}`
+      );
 
       message.author
         .send({
@@ -85,13 +82,6 @@ module.exports.run = async (client, message, args) => {
               content: `Here's the message log for #${channel.name}!`, // Optional message
             })
             .then(console.log("File sent to Bella!"))
-        ).then(
-          hailey
-            .send({
-              files: [filename], // Attach the generated file
-              content: `Here's the training message log for #${channel.name}!`, // Optional message
-            })
-            .then(console.log("File sent to Hailey!"))
         )
         .then(
           trainingLogChannel.send({

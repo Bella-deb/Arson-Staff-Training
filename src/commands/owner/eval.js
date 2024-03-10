@@ -21,7 +21,7 @@ async function clean(client, text) {
 module.exports = {
   name: "eval",
   aliases: ["e", "ev"],
-}
+};
 
 module.exports.run = async (client, message, args, level) => {
   if (!allowedUsers.includes(message.author.id)) {
@@ -33,7 +33,9 @@ module.exports.run = async (client, message, args, level) => {
     const evaled = eval(code);
     const cleaned = await clean(client, evaled);
     if (cleaned.length > 2000) {
-      return message.channel.send("Message is over 2000 characters. Evaluation sent to console!").then(console.log(`${bold("Evaluation:")}\n${cleaned}`));
+      return message.channel
+        .send("Message is over 2000 characters. Evaluation sent to console!")
+        .then(console.log(`${bold("Evaluation:")}\n${cleaned}`));
     }
     message.channel.send(`**Output:**\n${codeBlock("js", cleaned)}`);
   } catch (err) {
@@ -43,18 +45,7 @@ module.exports.run = async (client, message, args, level) => {
   }
 };
 
-exports.name = "eval";
-
-exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ["e"],
-  permLevel: "Bot Owner",
-};
-
-exports.help = {
+module.exports = {
   name: "eval",
-  category: "System",
-  description: "Evaluates arbitrary javascript.",
-  usage: "eval [...code]",
+  aliases: ["e"],
 };

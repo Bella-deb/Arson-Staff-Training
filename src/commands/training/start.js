@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { DateTime } = require("luxon");
 const config = require("../../config.json");
 const trainingConfig = require("../../training.json");
 
@@ -9,7 +10,9 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   try {
-    const logChannel = client.channels.cache.get(trainingConfig.trainingLogChannel);
+    const logChannel = client.channels.cache.get(
+      trainingConfig.trainingLogChannel
+    );
 
     const member = message.member.roles.cache.has("1209983942216908932");
     const trainedUserID = args[0];
@@ -86,40 +89,74 @@ module.exports.run = async (client, message, args) => {
         .send("Creating channel...")
         .then(async (originalMessage) => {
           // After sending the message, create the channel
-          const createdChannel = await message.guild.channels
-            .create({
-              name: `${`${trainedUserID}-training-area`}`,
-              topic: "Channel used for Modmail training!",
-              parent: `${trainingConfig.trainingCategory}`,
-              permissionOverwrites: [
-                {
-                  id: client.user.id,
-                  allow: [
-                    Discord.PermissionsBitField.Flags.SendMessages,
-                    Discord.PermissionsBitField.Flags.ViewChannel,
-                  ],
-                },
-                {
-                  id: message.author.id,
-                  allow: [
-                    Discord.PermissionsBitField.Flags.SendMessages,
-                    Discord.PermissionsBitField.Flags.ViewChannel,
-                  ],
-                },
-                {
-                  id: trainedUserID,
-                  allow: [
-                    Discord.PermissionsBitField.Flags.SendMessages,
-                    Discord.PermissionsBitField.Flags.ViewChannel,
-                  ],
-                },
-                {
-                  id: message.guild.id,
-                  deny: [Discord.PermissionsBitField.Flags.ViewChannel],
-                },
-              ],
+          const createdChannel = await message.guild.channels.create({
+            name: `${`${trainedUserID}-training-area`}`,
+            topic: "Channel used for Modmail training!",
+            parent: `${trainingConfig.trainingCategory}`,
+            permissionOverwrites: [
+              {
+                id: client.user.id,
+                allow: [
+                  Discord.PermissionsBitField.Flags.SendMessages,
+                  Discord.PermissionsBitField.Flags.ViewChannel,
+                ],
+              },
+              {
+                id: message.author.id,
+                allow: [
+                  Discord.PermissionsBitField.Flags.SendMessages,
+                  Discord.PermissionsBitField.Flags.ViewChannel,
+                ],
+              },
+              {
+                id: trainedUserID,
+                allow: [
+                  Discord.PermissionsBitField.Flags.SendMessages,
+                  Discord.PermissionsBitField.Flags.ViewChannel,
+                ],
+              },
+              {
+                id: message.guild.id,
+                deny: [Discord.PermissionsBitField.Flags.ViewChannel],
+              },
+            ],
+          });
+
+          // From luxon Library,
+          // Gets the date the command is ran,
+          // Sets the timezone to EST,
+          // Than puts the format as "<day> <month>, <year>"
+          const dateCreated = DateTime.now()
+            .setZone("America/New_York")
+            .toFormat("dd MMMM, yyyy HH:mm:ss");
+
+          const logEmbed = new Discord.EmbedBuilder()
+            .setAuthor({
+              name: `Arson Staff Training`,
+              iconURL: `https://cdn.discordapp.com/avatars/1209283589519446127/1a3adea2ba6c81f3fe0a48d91cdd64b8.webp?size=1024&format=webp&width=0&height=256`,
             })
-            .then(logChannel.send("A new training has been opened!"));
+            .setTitle(`New Training Opened`)
+            .setColor(`DarkRed`)
+            .addFields({
+              name: "Trainer Information:",
+              value: `❤️ Trainer: ${message.author}
+💳 Trainer ID: ${message.author.id}`,
+            })
+            .addFields({
+              name: "Trainee Information:",
+              value: `❤️ Trainee: <@${trainedUserID}>
+💳 Trainee ID: ${trainedUserID}`,
+            })
+            .addFields({
+              name: "Channel Information:",
+              value: `Created: \`${dateCreated}\`
+Channel: <#${createdChannel.id}>`,
+            });
+
+          logChannel.send({
+            content: "A new training has been opened!",
+            embeds: [logEmbed],
+          });
 
           const trainingEmbed = new Discord.EmbedBuilder()
             .setTitle("Training Information:")
