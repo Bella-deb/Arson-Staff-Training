@@ -25,6 +25,7 @@ module.exports.run = async (client, message, args) => {
         💽 **Node Version:** ${process.version}
         💽 **Nodemon Version:** ${package.dependencies["nodemon"]}
         💽 **Colorette Version:** ${package.dependencies["colorette"]}
+        💽 **Luxon Version:** ${package.dependencies["luxon"]}
       `);
 
     // Send to Channel
