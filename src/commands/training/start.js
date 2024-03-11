@@ -14,7 +14,9 @@ module.exports.run = async (client, message, args) => {
       trainingConfig.trainingLogChannel
     );
 
-    const member = message.member.roles.cache.has("1209983942216908932");
+    const allowedRoleID = trainingConfig.trainingPermissionRole;
+
+    const member = message.member.roles.cache.has(allowedRoleID);
     const trainedUserID = args[0];
 
     // Check if user has specified roles
@@ -149,8 +151,8 @@ module.exports.run = async (client, message, args) => {
             })
             .addFields({
               name: "Channel Information:",
-              value: `Created: \`${dateCreated}\`
-Channel: <#${createdChannel.id}>`,
+              value: `📅 Created: \`${dateCreated}\`
+🌻 Channel: <#${createdChannel.id}>`,
             });
 
           logChannel.send({

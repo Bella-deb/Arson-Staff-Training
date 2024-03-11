@@ -21,6 +21,8 @@ module.exports.run = async (client, message, args) => {
     })
     .setTitle(`Commands:`)
     .setColor(`${config.embedColor}`).setDescription(`
+        My prefix is \`${config.prefix}\`!
+
         🗒️ **Information:**
         **..help** 
         Shows this help message 
@@ -50,6 +52,8 @@ module.exports.run = async (client, message, args) => {
     })
     .setTitle(`Commands:`)
     .setColor("Random").setDescription(`
+          My prefix is \`${config.prefix}\`!
+          
           > 🗒️ **Information:**
           **..help** 
           Shows this help message

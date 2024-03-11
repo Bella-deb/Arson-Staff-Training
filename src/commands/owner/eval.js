@@ -38,14 +38,9 @@ module.exports.run = async (client, message, args, level) => {
         .then(console.log(`${bold("Evaluation:")}\n${cleaned}`));
     }
     message.channel.send(`**Output:**\n${codeBlock("js", cleaned)}`);
-  } catch (err) {
+  } catch (error) {
     const errorMessage = `Error:\n\`\`\`js\n${err}\n\`\`\``;
     message.channel.send(errorMessage);
     console.error(`Eval command error message: ${errorMessage}`);
   }
-};
-
-module.exports = {
-  name: "eval",
-  aliases: ["e"],
 };

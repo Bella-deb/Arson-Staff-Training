@@ -16,9 +16,8 @@ module.exports.run = async (client, message, args) => {
         "You are not authorized to use this command."
       );
     } else if (allowedUsers.includes(message.author.id)) {
-
       const categoryNameLookingFor = "৻ TRAINING ⋆˚｡⁺⋆";
-      const channelNameLookingFor = "";
+      const channelNameLookingFor = "💢・traininglogs";
 
       const guild = client.guilds.cache.get(`${message.guild.id}`);
 
@@ -33,7 +32,9 @@ module.exports.run = async (client, message, args) => {
       );
 
       if (matchingCategory.size > 0) {
-        return message.channel.send(`TThis server already has a training category!`);
+        return message.channel.send(
+          `This server already has a training category!`
+        );
       }
 
       const matchingChannel = channels.filter(
@@ -45,9 +46,15 @@ module.exports.run = async (client, message, args) => {
       );
 
       if (matchingChannel.size > 0) {
-        return message.channel.send(`TThis server already has a training channel!`);
+        return message.channel.send(
+          `This server already has a training channel!`
+        );
       }
 
+      const trainingRole = await message.guild.roles.create({
+        name: "🌹・Training Permissions",
+        color: `#D70040`,
+      }).then(`Training permissions role created!`);
 
       const trainingCategory = await message.guild.channels
         .create({
@@ -59,7 +66,7 @@ module.exports.run = async (client, message, args) => {
               deny: [Discord.PermissionsBitField.Flags.ViewChannel],
             },
             {
-              id: "1209983942216908932",
+              id: trainingRole.id,
               allow: [Discord.PermissionsBitField.Flags.ViewChannel],
             },
           ],
@@ -78,36 +85,41 @@ module.exports.run = async (client, message, args) => {
               deny: [Discord.PermissionsBitField.Flags.ViewChannel],
             },
             {
-              id: "1209983942216908932",
+              id: trainingRole.id,
               allow: [Discord.PermissionsBitField.Flags.ViewChannel],
             },
           ],
         })
         .then(message.channel.send("Training logs channel created!"));
 
-        fs.readFile('/home/bella/code/Discord Bots/Arson Staff Training/src/training.json', 'utf8', (err, data) => { 
+      fs.readFile(
+        "/home/bella/code/Discord Bots/Arson Staff Training/src/training.json",
+        "utf8",
+        (err, data) => {
           if (err) {
             console.error(err);
             return;
           }
-        
+
           // Parse the JSON data
           const jsonData = JSON.parse(data);
-        
+
           // Modify the desired value
           jsonData.trainingCategory = trainingCategory.id;
           jsonData.trainingLogChannel = trainingLogChannel.id;
-        
+          jsonData.trainingPermissionRole = trainingRole.id;
+
           // Write the updated data back to the file
-          fs.writeFile('training.json', JSON.stringify(jsonData), (err) => {
+          fs.writeFile("training.json", JSON.stringify(jsonData), (err) => {
             if (err) {
               console.error(err);
               return;
             }
-        
-            console.log('JSON file updated successfully!');
+
+            console.log("JSON file updated successfully!");
           });
-        });
+        }
+      );
     }
   } catch (error) {
     if (error.code === "ETIMEDOUT") {

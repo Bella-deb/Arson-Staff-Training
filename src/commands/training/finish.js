@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const config = require("../../config.json");
+const trainingConfig = require("../../training.json");
+const { DateTime } = require("luxon");
 
 module.exports = {
   name: "finish",
@@ -8,6 +10,35 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   try {
+    const logChannel = client.channels.cache.get(
+      trainingConfig.trainingLogChannel
+    );
+
+    const dateFinished = DateTime.now()
+      .setZone("America/New_York")
+      .toFormat("dd MMMM, yyyy HH:mm:ss");
+
+    const logEmbed = new Discord.EmbedBuilder()
+      .setAuthor({
+        name: `Arson Staff Training`,
+        iconURL: `https://cdn.discordapp.com/avatars/1209283589519446127/1a3adea2ba6c81f3fe0a48d91cdd64b8.webp?size=1024&format=webp&width=0&height=256`,
+      })
+      .setTitle(`Training Finished`)
+      .setColor(`DarkRed`)
+      .setDescription(`A trainee has finished their training!`)
+      .addFields(
+        {
+          name: "Trainee Information:",
+          value: `❤️ Trainee: ${message.author}
+💳 Trainee ID: ${message.author.id}`,
+        },
+        {
+          name: "Miscellaneous Information:",
+          value: `📅 Date Finished: \`${dateFinished}\`
+🌻 Channel: <#${message.channel.id}>`,
+        }
+      );
+
     if (!message.channel.name.includes(`${message.author.id}-training-area`)) {
       return message.channel.send(
         "You are not authorized to use this command."
@@ -60,6 +91,11 @@ In the meantime, the training ticket will be locked to overview your questions. 
           `An error occurred while modifying permissions. Please try again or contact the server administrator.`
         );
       }
+
+      const logMessage = await logChannel.send({
+        embeds: [logEmbed],
+        content: "A user has finished training!",
+      });
     }
   } catch (error) {
     if (error.code === "ETIMEDOUT") {

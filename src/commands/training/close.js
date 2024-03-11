@@ -10,6 +10,34 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   try {
+    const logChannel = client.channels.cache.get(
+      trainingConfig.trainingLogChannel
+    );
+
+    const dateFinished = DateTime.now()
+      .setZone("America/New_York")
+      .toFormat("dd MMMM, yyyy HH:mm:ss");
+
+    const logEmbed = new Discord.EmbedBuilder()
+      .setAuthor({
+        name: `Arson Staff Training`,
+        iconURL: `https://cdn.discordapp.com/avatars/1209283589519446127/1a3adea2ba6c81f3fe0a48d91cdd64b8.webp?size=1024&format=webp&width=0&height=256`,
+      })
+      .setTitle(`Training Closed`)
+      .setColor(`DarkRed`)
+      .setDescription(`A user has closed a training thread.`)
+      .setFields(
+        {
+          name: "Trainer Information:",
+          value: `❤️ Trainer: ${message.author}
+      💳 Trainer ID: ${message.author.id}`,
+        },
+        {
+          name: "Miscellaneous Information:",
+          value: `📅 Date Closed: ${dateFinished}`,
+        }
+      );
+
     if (!message.channel.name.includes("training")) {
       return message.channel.send(`This command may not be run here!`);
     } else {
@@ -73,20 +101,23 @@ module.exports.run = async (client, message, args) => {
       message.author
         .send({
           files: [`./logs/${filename}.txt`], // Attach the generated file
-          content: `Here's the message log for #${channel.name}!`, // Optional message
+          content: `Here's the message log for #${channel.name}!`,
+          embeds: [logEmbed],
         })
         .then(
           bella
             .send({
               files: [`./logs/${filename}.txt`], // Attach the generated file
-              content: `Here's the message log for #${channel.name}!`, // Optional message
+              content: `Here's the message log for #${channel.name}!`,
+              embeds: [logEmbed],
             })
             .then(console.log("File sent to Bella!"))
         )
         .then(
           trainingLogChannel.send({
             files: [`./logs/${filename}.txt`],
-            content: `Here's the message log for #${channel.name}!`,
+            content: `A user has a training thread! (#${channel.name})`,
+            embeds: [logEmbed],
           })
         )
         .then(() => {
