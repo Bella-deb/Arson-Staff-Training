@@ -39,7 +39,7 @@ module.exports.run = async (client, message, args, level) => {
     }
     message.channel.send(`**Output:**\n${codeBlock("js", cleaned)}`);
   } catch (error) {
-    const errorMessage = `Error:\n\`\`\`js\n${err}\n\`\`\``;
+    const errorMessage = `Error:\n\`\`\`js\n${error}\n\`\`\``;
     message.channel.send(errorMessage);
     console.error(`Eval command error message: ${errorMessage}`);
   }

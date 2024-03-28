@@ -38,6 +38,7 @@ for (const file of events) {
   client.on(eventName, event.bind(null, client));
 }
 
+
 client.commands = new Collection();
 
 function readFilesRecursively(directory, fileList = []) {

@@ -18,6 +18,7 @@ module.exports.run = async (client, message, args) => {
     } else if (allowedUsers.includes(message.author.id)) {
       const categoryNameLookingFor = "৻ TRAINING ⋆˚｡⁺⋆";
       const channelNameLookingFor = "💢・traininglogs";
+      const roleNameLookingFor = "🌹・Training Permissions";
 
       const guild = client.guilds.cache.get(`${message.guild.id}`);
 
@@ -51,10 +52,18 @@ module.exports.run = async (client, message, args) => {
         );
       }
 
-      const trainingRole = await message.guild.roles.create({
-        name: "🌹・Training Permissions",
-        color: `#D70040`,
-      }).then(`Training permissions role created!`);
+      const roleCheck = await message.guild.roles.cache.forEach((role) => {
+        if (role.name.includes("🌹・Training Permissions")) {
+        return message.channel.send(`This server already has a training role!`)
+        }
+        });
+
+      const trainingRole = await message.guild.roles
+        .create({
+          name: "🌹・Training Permissions",
+          color: `#D70040`,
+        })
+        .then(`Training permissions role created!`);
 
       const trainingCategory = await message.guild.channels
         .create({
@@ -86,7 +95,10 @@ module.exports.run = async (client, message, args) => {
             },
             {
               id: trainingRole.id,
-              allow: [Discord.PermissionsBitField.Flags.ViewChannel],
+              allow: [
+                Discord.PermissionsBitField.Flags.ViewChannel,
+                Discord.PermissionsBitField.Flags.SendMessages,
+              ],
             },
           ],
         })

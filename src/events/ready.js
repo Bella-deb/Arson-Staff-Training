@@ -1,5 +1,6 @@
 // Make Ready Event Text Look Pretty
 const { bold } = require("colorette");
+const { ActivityType } = require("discord.js");
 
 // Ready event for bot startup.
 module.exports = (client) => {
@@ -16,10 +17,38 @@ module.exports = (client) => {
     )} servers, for a total of ${bold(client.users.cache.size)} users.`
   );
 
-  // Makes activity: "Watching staff members!"
-  // Type 3 = Watching
-  client.user.setPresence({
-    activities: [{ type: 3, name: "staff members!" }],
-    status: "online",
-  });
+  const totalUsers = client.users.cache.size;
+  const totalChannels = client.channels.cache.size;
+  const totalServers = client.guilds.cache.size;
+
+  const activities = [
+    "staff members!",
+    "staff trainings!",
+    "ily karma.deb - Bella <3",
+    "ily magicvalkyrie - Bella <3",
+    "made with love by @bella.deb!",
+    `${totalUsers} users!`,
+    "trans rights are human rights!",
+    `${totalChannels} channels!`,
+    `${totalServers} servers!`,
+    "you matter!",
+    "don't give up!",
+  ];
+
+  let currentActivityIndex = 0;
+
+  setInterval(() => {
+    currentActivityIndex = (currentActivityIndex + 1) % activities.length;
+    const newActivity = activities[currentActivityIndex];
+    const changePresence = client.user.setPresence({
+      activities: [{ type: ActivityType.Watching, name: newActivity }],
+      status: "online",
+    });
+
+    if (!changePresence) {
+      return console.log("Activity change failed!");
+    }
+
+    console.log(`Activity changed to \"${newActivity}\"!`);
+  }, 5000);
 };
